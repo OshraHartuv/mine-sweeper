@@ -2,7 +2,7 @@ table{
     margin:0 auto;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 30px;
+    margin-top: 15px;
     opacity: 0.8;
 }
 
@@ -16,40 +16,57 @@ table{
 
  .cell:hover{
    cursor: pointer;
+   background-color: darkgrey;
  }
 
 .timer{
-    color: tomato;
-    display:none;
-    padding-top: 15px;
-    margin: auto;
+  height:fit-content;
+  width:fit-content;
+  background-color: black;
+  color: grey;
+  display:none;
+  margin: auto;
+  margin-top: 15px;
+  padding: 10px;
+  opacity: 0.9;
+}
+.lives{
+  margin-top: 15px;
+  font-size: xx-large;
+  color: aliceblue;
 }
 
 body{
   text-align: center;
   font-family: cursive;
-  background-image: url(../photos/background.webp);
+  background-image: url(../photos/bomb3.jpg);
   background-size: cover;
   height: 100vh;
 }
 
-
-
 button{
   font-family: cursive;
-  padding: auto;
-  margin-right: 10px;
+  /* padding: auto; */
+  /* margin-right: 10px; */
   opacity: 0.8;
+  /* margin-top: 10px; */
 }
 
 button:hover{
   box-shadow: 0 5px 5px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-  color: rgb(187, 4, 4);
+  color: lightcyan;
+  background-color: black;
+  border: none;
   cursor: pointer;
+  opacity: 1;
 }
-
-button:hover{
-  cursor: pointer;
+.hint{
+  margin: auto;
+  margin-top: 10px;
+  background-color: transparent;
+  border:none;
+  color:oldlace;
+  display: inline-block;
 }
 
 #shown{
@@ -60,4 +77,29 @@ button:hover{
 #flaged{
   background-color: red;
 }
+h1{
+  margin-bottom: 5px;
+}
+h2{
+  display: none;
+  font-size: xx-large;
+}
+h3{
+  font-size: xx-large;
+  display: none;
+}
+.smily{
+  height:fit-content;
+  width:fit-content;
+  background-color: aliceblue;
+  opacity: 0.8;
+  margin: auto;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 50%;
+}
 
+.smily:hover{
+  cursor: pointer;
+  background-color: black;
+}

@@ -9,15 +9,20 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body onload="initGame(event)" oncontextmenu="return false";>
+<body onload="initGame(event)" oncontextmenu="return false" ;>
     <h1>Mine Sweeper</h1>
-    <button onclick="levelChoice(4,2)">easy</button>
-    <button onclick="levelChoice(8,12)">pro</button>
-    <button onclick="levelChoice(12,30)">extreme</button>
+    <div class="smily" onclick="reset()">😊</div>
+    <button onclick="startGame(4,2)">easy</button>
+    <button onclick="startGame(8,12)">pro</button>
+    <button onclick="startGame(12,30)">extreme</button>
+    <button class="hint" onclick="hint(this)">hints: <span>💡 💡 💡</span></button>
     <table>
         <tbody class="board-container"></tbody>
     </table>
     <div class="timer">timer</div>
+    <div class="lives">lives: <span></span></div>
+    <h2>WINNWR!!</h2>
+    <h3> LOSER</h3>
     <script src="js/util.js"></script>
     <script src="js/mines.js"></script>
     <script src="js/game.js"></script>

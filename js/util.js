@@ -40,9 +40,7 @@ function returnEmptyCell() {
             if (!gBoard[i][j].isMine && !gBoard[i][j].isShown) emptyCells.push({i:i,j:j})
         }
     }
-    // console.log(emptyCells);
     var emptyCell = emptyCells[getRandomInt(0, emptyCells.length - 1)];
-    console.log('mine is in:', emptyCell);
     gMinesLocations.push(emptyCell);
     return emptyCell;
 }
