@@ -24,7 +24,7 @@ function renderBoard(mat, selector) {
         for (var j = 0; j < mat[0].length; j++) {
             var cell = (mat[i][j].isShown) ? mat[i][j].minesAroundCount : ' ';
             var className = `cell cell${i}-${j}`;
-            strHTML += `<td class="${className}" onclick="cellClickedLeft({i:${i}, j:${j}})" onmousedown="cellClickedRight(event,{i:${i}, j:${j}})"> ${cell}</td>`
+            strHTML += `<td class="${className}" onclick="cellClickedLeft({i:${i}, j:${j}}, this)" onmousedown="cellClickedRight(event,{i:${i}, j:${j}}, this)">${cell}</td>`
         }
         strHTML += '</tr>'
     }
@@ -67,4 +67,9 @@ function renderCell(location, value) {
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function getClassName(location) {
+    var cellClass = 'cell' + location.i + '-' + location.j;
+    return cellClass;
 }

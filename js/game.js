@@ -41,7 +41,10 @@ function loseGame() {
     clearInterval(gIntreval);
     for (var i = 0; i < gMinesLocations.length; i++) {
         var currMineLocation = gMinesLocations[i];
+        var elCell = document.querySelector(`.${getClassName(currMineLocation)}`)
+        elCell.id = 'shown'
         gBoard[currMineLocation.i][currMineLocation.j].isShown = true;
+
         renderCell(currMineLocation, MINE)
     }
 }
@@ -59,7 +62,9 @@ function winGame() {
     console.log('win');
 }
 
-function openNegs(location){
+function openNegs(location) {
+    var elCell = document.querySelector(`.${getClassName(location)}`)
+    elCell.id = 'shown'
     for (var i = location.i - 1; i <= location.i + 1; i++) {
         if (i < 0 || i >= gBoard.length) continue;
         for (var j = location.j - 1; j <= location.j + 1; j++) {
@@ -69,7 +74,8 @@ function openNegs(location){
                 gBoard[i][j].isShown = true;
                 gBoard[i][j].isMarked = false;
                 gGame.shownCount++
-                // console.log(gGame.shownCount);
+                var elCell = document.querySelector(`.${getClassName({ i: i, j: j })}`)
+                elCell.id = 'shown'
                 renderCell({ i: i, j: j }, gBoard[i][j].minesAroundCount)
                 winGame()
             }
@@ -79,28 +85,28 @@ function openNegs(location){
 }
 
 
-function cellClickedLeft(location) {
+function cellClickedLeft(location, elCell) {
     if (!gGame.isOn) return;
     var currCell = gBoard[location.i][location.j]
-    gGame.shownCount+= (currCell.isShown) ? 0:1;
+    gGame.shownCount += (currCell.isShown) ? 0 : 1;
     currCell.isShown = true;
     if (gGame.isFirstClick) {
-        
-        gGame.isFirstClick = false;
         runTimer();
         placeMines(gLevel.mines)
         setMinesAroundCount(gBoard)
         renderBoard(gBoard, '.board-container')
+        gGame.isFirstClick = false;
+        elCell = document.querySelector(`.${getClassName(location)}`)
     }
     else if (currCell.isMarked) return;
     else if (currCell.isMine) loseGame()
     if (currCell.minesAroundCount === 0) openNegs(location)
-    renderCell(location, currCell.minesAroundCount)
     if (gGame.markedCount + gGame.shownCount === gLevel.size ** 2) winGame()
-
+    elCell.id = 'shown'
+    renderCell(location, currCell.minesAroundCount)
 }
 
-function cellClickedRight(event, location) {
+function cellClickedRight(event, location,elcell) {
     if (event.which == 3) {
         if (gBoard[location.i][location.j].isShown) return;
         if (!gGame.isOn) return
@@ -108,12 +114,14 @@ function cellClickedRight(event, location) {
             gBoard[location.i][location.j].isMarked = true;
             renderCell(location, FLAG)
             gGame.markedCount++
+            elcell.id = 'flaged'
             if (gGame.markedCount + gGame.shownCount === gLevel.size ** 2) winGame()
         }
         else {
             gBoard[location.i][location.j].isMarked = false;
             renderCell(location, '')
             gGame.markedCount--
+            elcell.removeAttribute('id')
 
         }
     }
