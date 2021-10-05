@@ -16,7 +16,7 @@ var gMinesLocations;
 var gMoves;
 var gRecursMoves;
 
- 
+
 function initGame() {
     gLevel = startGame()
     renderBoard(gBoard, '.board-container')
@@ -78,7 +78,7 @@ function cellClicked(location, elCell) {
     }
     if (gBoard[location.i][location.j].isShown) return
     // boom mode:
-    if (gGame.isBoom){
+    if (gGame.isBoom) {
         gGame.isFirstClick = false;
         addBoomMines()
         gGame.isBoom = false;
@@ -161,12 +161,14 @@ function cellMarked(event, location, elcell) {
         gMoves.push(location)
     }
 }
- 
+
 function manual(elManualBtn) {
     var elTimer = document.querySelector('.timer');
     if (elTimer.style.display === 'block') return
     if (gGame.isManual) return
-    if(gGame.isBoom) return
+    if (gGame.isBoom) return
+    var elBoom = document.querySelector('.sevenBoom');
+    elBoom.style.display = 'none'
     elManualBtn.innerText = gLevel.minesAdded
     gGame.isManual = true;
 }
@@ -174,7 +176,7 @@ function manual(elManualBtn) {
 function reset() {
     startGame(gLevel.size, gLevel.mines)
 }
- 
+
 function loseGame() {
     gGame.isOn = false;
     clearInterval(gIntreval);
@@ -189,9 +191,8 @@ function loseGame() {
     elLooser.style.display = 'block'
     var elSmily = document.querySelector('.smily')
     elSmily.innerText = SAD;
-    console.log(elSmily);
 }
- 
+
 function winGame() {
     for (var i = 0; i < gBoard.length; i++) {
         for (var j = 0; j < gBoard[0].length; j++) {
@@ -208,7 +209,6 @@ function winGame() {
     elWinner.style.display = 'block'
     var elSmily = document.querySelector('.smily')
     elSmily.innerText = WIN;
-    console.log(elSmily);
     checkBestScore()
 }
 
@@ -288,76 +288,71 @@ function showNegs(location) {
 }
 
 function cssChanges() {
-    var elLooser = document.querySelector('h3')
-    elLooser.style.display = 'none'
-    var elWinner = document.querySelector('h2')
-    elWinner.style.display = 'none'
+    var elLooser = document.querySelector('h3');
+    elLooser.style.display = 'none';
+    var elWinner = document.querySelector('h2');
+    elWinner.style.display = 'none';
     var elTimer = document.querySelector('.timer');
     elTimer.style.display = 'none';
     var elLives = document.querySelector('.lives');
-    elLives.innerHTML = `lives: <span>${LIVES} ${LIVES} ${LIVES}</span>`
+    elLives.innerHTML = `lives: <span>${LIVES} ${LIVES} ${LIVES}</span>`;
     var elSmily = document.querySelector('.smily');
     elSmily.innerText = HAPPY;
     var elHintBtnSpan = document.querySelector('.hint span');
-    elHintBtnSpan.innerText = `${HINT} ${HINT} ${HINT}`
+    elHintBtnSpan.innerText = `${HINT} ${HINT} ${HINT}`;
     var elSafeBtnSpan = document.querySelector('.safe span')
-    elSafeBtnSpan.innerText = `${SAFE} ${SAFE} ${SAFE}`
+    elSafeBtnSpan.innerText = `${SAFE} ${SAFE} ${SAFE}`;
     var elManualBtn = document.querySelector('.manual');
-    elManualBtn.innerText = 'press for manual'
-    var elBestScoreSpan = document.querySelector('.bestScore span')
-    var elSevenBoom = document.querySelector('.sevenBoom')
-    elSevenBoom.innerText = 'press for 7BOOM'
+    elManualBtn.innerText = 'press for manual';
+    var elBoom = document.querySelector('.sevenBoom');
+    elBoom.style.display = 'block';
+    var elSevenBoom = document.querySelector('.sevenBoom');
+    elSevenBoom.innerText = 'press for 7BOOM';
+    var elManualBtn = document.querySelector('.manual');
+    elManualBtn.style.display = 'block'
+    var elBestScoreSpan = document.querySelector('.bestScore span');
+    var level = null;
     switch (gLevel.size) {
         case 4:
-            elBestScoreSpan.innerText = localStorage.getItem('esay best score')
+            level = 'easy'
             break;
         case 8:
-            elBestScoreSpan.innerText = localStorage.getItem('medium best score')
+            level = 'medium'
             break;
         case 12:
-            elBestScoreSpan.innerText = localStorage.getItem('hard best score')
+            level = 'hard'
             break;
     }
+    elBestScoreSpan.innerText =localStorage.getItem(`${level} best score`);
 
 }
 
 function checkBestScore() {
     var elTimer = document.querySelector('.timer');
     var elBestScoreSpan = document.querySelector('.bestScore span')
+    var level = null;
     switch (gLevel.size) {
         case 4:
-            if (!localStorage.getItem('esay best score')) {
-                localStorage.setItem('esay best score', elTimer.innerText);
-                elBestScoreSpan.innerText = 'YOU GOT A NEW RECORD'
-            } else {
-                if (elTimer.innerText < localStorage.getItem('esay best score')) {
-                    localStorage.setItem('esay best score', elTimer.innerText)
-                    elBestScoreSpan.innerText = 'YOU GOT A NEW RECORD'
-                }
-            }
+            level = 'easy'
             break;
         case 8:
-            if (!localStorage.getItem('medium best score')) {
-                localStorage.setItem('medium best score', elTimer.innerText);
-                elBestScoreSpan.innerText = 'YOU GOT A NEW RECORD'
-            } else {
-                if (elTimer.innerText < localStorage.getItem('medium best score')) {
-                    localStorage.setItem('medium best score', elTimer.innerText)
-                    elBestScoreSpan.innerText = 'YOU GOT A NEW RECORD'
-                }
-            }
+            level = 'medium'
             break;
         case 12:
-            if (!localStorage.getItem('hard best score')) {
-                localStorage.setItem('hard best score', elTimer.innerText);
-                elBestScoreSpan.innerText = 'YOU GOT A NEW RECORD'
-            } else {
-                if (elTimer.innerText < localStorage.getItem('hard best score')) {
-                    localStorage.setItem('hard best score', elTimer.innerText)
-                    elBestScoreSpan.innerText = 'YOU GOT A NEW RECORD'
-                }
-            }
+            level = 'hard'
             break;
+    }
+
+    if (!localStorage.getItem(`${level} best score`)) {
+        localStorage.setItem(`${level} best score`, elTimer.innerText);
+        elBestScoreSpan.innerText =localStorage.getItem(`${level} best score`)
+        elTimer.innerText = 'YOU GOT A NEW RECORD'
+    } else {
+        if (elTimer.innerText < localStorage.getItem(`${level} best score`)) {
+            localStorage.setItem(`${level} best score`, elTimer.innerText)
+            elBestScoreSpan.innerText =localStorage.getItem(`${level} best score`)
+            elTimer.innerText = 'YOU GOT A NEW RECORD'
+        }
     }
 }
 
@@ -396,9 +391,9 @@ function undo() {
             renderCell(currCellLocation, '')
         }
         // getting initial cell
-        lastMove = gMoves.splice(gMoves.length-1, 1)[0]
+        lastMove = gMoves.splice(gMoves.length - 1, 1)[0]
         elCell = getClassName(lastMove)
-    // single sale changed:
+        // single sale changed:
     } else {
         var currCellLocation = lastMove
         var elCell = getClassName(currCellLocation)
@@ -417,12 +412,14 @@ function undo() {
     document.querySelector(`.${elCell}`).removeAttribute('id')
     renderCell(currCellLocation, '')
 }
- 
-function sevenBoom(elBoomBtn){
+
+function sevenBoom(elBoomBtn) {
     var elTimer = document.querySelector('.timer');
-    if (elTimer.style.display === 'block') return
-    if (gGame.isManual) return
-    if(gGame.isBoom) return
+    if (elTimer.style.display === 'block') return;
+    if (gGame.isManual) return;
+    if (gGame.isBoom) return;
+    var elManualBtn = document.querySelector('.manual');
+    elManualBtn.style.display = 'none'
     elBoomBtn.innerText = '7BOOM is on!'
     gGame.isBoom = true
 

@@ -23,6 +23,7 @@ function placeMines(count) {
 }
 
 function addMinesManualy(location, elManualBtn) {
+    if (gBoard[location.i][location.j].isMine) return
     gBoard[location.i][location.j] = {
         minesAroundCount: MINE,
         isShown: true,
