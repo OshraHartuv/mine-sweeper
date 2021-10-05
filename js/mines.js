@@ -22,8 +22,8 @@ function placeMines(count) {
     }
 }
 
-function addMinesManualy(location,elManualBtn) {
-    gBoard[location.i][location.j]= {
+function addMinesManualy(location, elManualBtn) {
+    gBoard[location.i][location.j] = {
         minesAroundCount: MINE,
         isShown: true,
         isMine: true,
@@ -36,18 +36,18 @@ function addMinesManualy(location,elManualBtn) {
     return;
 }
 
-function addBoomMines(){
+function addBoomMines() {
     var idx = 1;
     for (var i = 0; i < gBoard.length; i++) {
         for (var j = 0; j < gBoard[0].length; j++) {
-            if (idx === 7 || idx %7 === 0 ||idx % 10 === 7 || (idx - (idx % 10))/ 10 === 7 || idx /10 === 7) {
+            if (idx === 7 || idx % 7 === 0 || idx % 10 === 7 || (idx - (idx % 10)) / 10 === 7 || idx / 10 === 7) {
                 gBoard[i][j] = {
                     minesAroundCount: MINE,
                     isShown: false,
                     isMine: true,
                     isMarked: false
                 }
-                gMinesLocations.push({i:i, j:j})
+                gMinesLocations.push({ i: i, j: j })
             }
             idx++
         }

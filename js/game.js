@@ -5,7 +5,6 @@ const FLAG = '🚩'
 const HAPPY = '😊'
 const SAD = '😖'
 const WIN = '😎'
-const RESET = '😲'
 const HINT = '💡'
 const SAFE = '🦺'
 const LIVES = '❤️'
@@ -17,14 +16,13 @@ var gMinesLocations;
 var gMoves;
 var gRecursMoves;
 
-
+ 
 function initGame() {
     gLevel = startGame()
     renderBoard(gBoard, '.board-container')
 }
 
 function startGame(size = 4, mines = 2) {
-    clearInterval(gIntreval);
     gGame = {
         isOn: true,
         shownCount: 0,
@@ -41,8 +39,9 @@ function startGame(size = 4, mines = 2) {
     gLevel = {
         size: size,
         mines: mines,
-        minesAdded: mines,
+        minesAdded: mines
     }
+    clearInterval(gIntreval);
     cssChanges()
     gRecursMoves = []
     gMinesLocations = []
@@ -55,7 +54,6 @@ function startGame(size = 4, mines = 2) {
 function cellClicked(location, elCell) {
     if (!gGame.isOn) return;
     if (gBoard[location.i][location.j].isMarked) return;
-    if (gBoard[location.i][location.j].isShown) return
     // manual mode:
     if (gGame.isManual) {
         gGame.isFirstClick = false;
@@ -78,6 +76,7 @@ function cellClicked(location, elCell) {
             return;
         }
     }
+    if (gBoard[location.i][location.j].isShown) return
     // boom mode:
     if (gGame.isBoom){
         gGame.isFirstClick = false;
@@ -126,7 +125,7 @@ function cellClicked(location, elCell) {
             elLivesSpan.innerText = livesStr
             elSmily.innerText = SAD
             setTimeout(function () {
-                elSmily.innerText = HAPPY;
+                if (gGame.isOn) elSmily.innerText = HAPPY;
             }, 1000)
         }
     }
@@ -163,7 +162,7 @@ function cellMarked(event, location, elcell) {
         gMoves.push(location)
     }
 }
-
+ 
 function manual(elManualBtn) {
     var elTimer = document.querySelector('.timer');
     if (elTimer.style.display === 'block') return
@@ -176,7 +175,7 @@ function manual(elManualBtn) {
 function reset() {
     startGame(gLevel.size, gLevel.mines)
 }
-
+ 
 function loseGame() {
     gGame.isOn = false;
     clearInterval(gIntreval);
@@ -191,8 +190,9 @@ function loseGame() {
     elLooser.style.display = 'block'
     var elSmily = document.querySelector('.smily')
     elSmily.innerText = SAD;
+    console.log(elSmily);
 }
-
+ 
 function winGame() {
     for (var i = 0; i < gBoard.length; i++) {
         for (var j = 0; j < gBoard[0].length; j++) {
@@ -208,7 +208,8 @@ function winGame() {
     var elWinner = document.querySelector('h2')
     elWinner.style.display = 'block'
     var elSmily = document.querySelector('.smily')
-    elSmily.innerText = WIN
+    elSmily.innerText = WIN;
+    console.log(elSmily);
     checkBestScore()
 }
 
@@ -239,8 +240,6 @@ function openNegs(location) {
             else continue;
         }
     }
-    // // if (gRecursMoves.length) gMoves.push(gRecursMoves)
-    // gRecursMoves = []
 }
 
 function runTimer() {
@@ -252,8 +251,9 @@ function runTimer() {
     }, 1);
 }
 
-function hint(elHintBtn) {
+function hint() {
     if (!gGame.isOn) return;
+    if (!gGame.hints) return
     gGame.hints--
     gGame.hintIsOn = true;
     var elHintBtnTextStr = ''
@@ -262,9 +262,6 @@ function hint(elHintBtn) {
     }
     var elHintBtnSpan = document.querySelector('.hint span');
     elHintBtnSpan.innerText = elHintBtnTextStr
-    if (gGame.hints === 0) setTimeout(function () {
-        elHintBtn.style.display = 'none'
-    }, 2000)
 }
 
 function showNegs(location) {
@@ -303,15 +300,13 @@ function cssChanges() {
     elSmily.innerText = HAPPY;
     var elHintBtnSpan = document.querySelector('.hint span');
     elHintBtnSpan.innerText = `${HINT} ${HINT} ${HINT}`
-    var elHintBtn = document.querySelector('.hint');
-    elHintBtn.style.display = 'block'
     var elSafeBtnSpan = document.querySelector('.safe span')
     elSafeBtnSpan.innerText = `${SAFE} ${SAFE} ${SAFE}`
-    var elSafeBtn = document.querySelector('.safe')
-    elSafeBtn.style.display = 'block'
     var elManualBtn = document.querySelector('.manual');
     elManualBtn.innerText = 'press for manual'
     var elBestScoreSpan = document.querySelector('.bestScore span')
+    var elSevenBoom = document.querySelector('.sevenBoom')
+    elSevenBoom.innerText = 'press for 7BOOM'
     switch (gLevel.size) {
         case 4:
             elBestScoreSpan.innerText = localStorage.getItem('esay best score')
@@ -366,8 +361,9 @@ function checkBestScore() {
     }
 }
 
-function safeClick(elSafeBtn) {
+function safeClick() {
     if (!gGame.isOn) return;
+    if (!gGame.safeClicks) return
     gGame.safeClicks--
     var emptyCell = returnEmptyCell()
     gBoard[emptyCell.i][emptyCell.j].isShown = true;
@@ -382,9 +378,6 @@ function safeClick(elSafeBtn) {
     }
     var elSafeBtnSpan = document.querySelector('.safe span')
     elSafeBtnSpan.innerText = elSafeBtnStr;
-    if (gGame.safeClicks === 0) setTimeout(function () {
-        elSafeBtn.style.display = 'none'
-    }, 2000)
 
 }
 
@@ -392,6 +385,7 @@ function undo() {
     if (!gMoves.length) return
     if (!gGame.isOn) return
     var lastMove = gMoves.pop()
+    // recursed move:
     if (lastMove.length) {
         for (var i = 0; i < lastMove.length; i++) {
             var currCellLocation = lastMove[i]
@@ -401,11 +395,14 @@ function undo() {
             document.querySelector(`.${elCell}`).removeAttribute('id')
             renderCell(currCellLocation, '')
         }
+        // getting initial cell
         lastMove = gMoves.splice(gMoves.length-1, 1)[0]
         elCell = getClassName(lastMove)
+    // single sale changed:
     } else {
         var currCellLocation = lastMove
         var elCell = getClassName(currCellLocation)
+        // rightClick
         if (gBoard[lastMove.i][lastMove.j].isMarked) {
             gBoard[lastMove.i][lastMove.j].isMarked = false
             gGame.markedCount--
@@ -414,18 +411,19 @@ function undo() {
             return
         }
     }
+    // left click / initial
     gBoard[lastMove.i][lastMove.j].isShown = false
     gGame.shownCount--
     document.querySelector(`.${elCell}`).removeAttribute('id')
     renderCell(currCellLocation, '')
 }
-
-function sevenBoom(){
-    console.log('boom');
+ 
+function sevenBoom(elBoomBtn){
     var elTimer = document.querySelector('.timer');
     if (elTimer.style.display === 'block') return
     if (gGame.isManual) return
     if(gGame.isBoom) return
+    elBoomBtn.innerText = '7BOOM is on!'
     gGame.isBoom = true
 
 }
