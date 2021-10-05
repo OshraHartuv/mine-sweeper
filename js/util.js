@@ -41,7 +41,6 @@ function returnEmptyCell() {
         }
     }
     var emptyCell = emptyCells[getRandomInt(0, emptyCells.length - 1)];
-    gMinesLocations.push(emptyCell);
     return emptyCell;
 }
 

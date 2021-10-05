@@ -36,6 +36,7 @@ function startGame(size = 4, mines = 2) {
         hintIsOn: false,
         safeClicks: 3,
         isManual: false,
+        isBoom: false
     }
     gLevel = {
         size: size,
@@ -76,6 +77,16 @@ function cellClicked(location, elCell) {
             addMinesManualy(location, elManualBtn)
             return;
         }
+    }
+    // boom mode:
+    if (gGame.isBoom){
+        gGame.isFirstClick = false;
+        addBoomMines()
+        gGame.isBoom = false;
+        runTimer()
+        setMinesAroundCount(gBoard)
+        renderBoard(gBoard, '.board-container')
+        elCell = document.querySelector(`.${getClassName(location)}`)
     }
     // giving the user an hint:
     else if (gGame.hintIsOn) {
@@ -157,6 +168,7 @@ function manual(elManualBtn) {
     var elTimer = document.querySelector('.timer');
     if (elTimer.style.display === 'block') return
     if (gGame.isManual) return
+    if(gGame.isBoom) return
     elManualBtn.innerText = gLevel.minesAdded
     gGame.isManual = true;
 }
@@ -406,4 +418,14 @@ function undo() {
     gGame.shownCount--
     document.querySelector(`.${elCell}`).removeAttribute('id')
     renderCell(currCellLocation, '')
+}
+
+function sevenBoom(){
+    console.log('boom');
+    var elTimer = document.querySelector('.timer');
+    if (elTimer.style.display === 'block') return
+    if (gGame.isManual) return
+    if(gGame.isBoom) return
+    gGame.isBoom = true
+
 }
