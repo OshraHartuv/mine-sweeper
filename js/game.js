@@ -108,7 +108,6 @@ function cellClicked(location, elCell) {
         gGame.isFirstClick = false;
         elCell = document.querySelector(`.${getClassName(location)}`)
     }
-
     else if (currCell.isMine) {
         if (gGame.lives === 0) {
             var elLives = document.querySelector('.lives')
@@ -253,7 +252,8 @@ function runTimer() {
 
 function hint() {
     if (!gGame.isOn) return;
-    if (!gGame.hints) return
+    if (!gGame.hints) return;
+    if (gGame.hintIsOn) return
     gGame.hints--
     gGame.hintIsOn = true;
     var elHintBtnTextStr = ''

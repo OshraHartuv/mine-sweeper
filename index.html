@@ -10,30 +10,37 @@
 </head>
 
 <body onload="initGame(event)" oncontextmenu="return false" ;>
-    <div class="smily" onclick="reset()">😊</div>
 
-    <button onclick="startGame(4,2)">easy</button>
-    <button onclick="startGame(8,12)">pro</button>
-    <button onclick="startGame(12,30)">extreme</button>
+    <div class="lives">lives: <span>❤️❤️❤️</span></div>
+    <button class="smily" onclick="reset()">😊</button>
+    <div class="bestScore">best score: <span></span></div>
 
-    <div>
-        <button class="manual" onclick="manual(this)">press for manual</button>
-        <button class="sevenBoom" onclick="sevenBoom(this)">press for 7BOOM</button>
+    <div class="upperBtns">
+        <button onclick="startGame(4,2)">easy</button>
+        <button onclick="startGame(8,12)">medium</button>
+        <button onclick="startGame(12,30)">hard</button>
+        <button class="undo" onclick="undo()">undo</button>
     </div>
 
-    <button class="undo" onclick="undo()">undo</button>
+    <div class="floatersRight">
+        <div>
+            <button class="manual" onclick="manual(this)">press for manual</button>
+        </div>
+        <div>
+            <button class="sevenBoom" onclick="sevenBoom(this)">press for 7BOOM</button>
+        </div>
+    </div>
 
     <table>
         <tbody class="board-container"></tbody>
     </table>
 
+    <div class="floatersLeft">
+        <button class="safe" onclick="safeClick()">safe clicks: <span>🦺🦺🦺</span></button>
+        <button class="hint" onclick="hint()">hints: <span>💡 💡 💡</span></button>
+    </div>
+
     <div class="timer">timer</div>
-
-    <div class="lives">lives: <span>❤️❤️❤️</span></div>
-    <button class="safe" onclick="safeClick()">safe clicks: <span>🦺🦺🦺</span></button>
-    <button class="hint" onclick="hint()">hints: <span>💡 💡 💡</span></button>
-
-    <div class="bestScore">best score: <span></span></div>
 
     <h2>WINNER!!</h2>
     <h3> LOSER</h3>
