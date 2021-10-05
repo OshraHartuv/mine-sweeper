@@ -32,8 +32,10 @@ table{
 }
 .lives{
   margin-top: 15px;
-  font-size: xx-large;
-  color: aliceblue;
+  background-color: transparent;
+  border:none;
+  color:oldlace;
+  display:block;
 }
 
 body{
@@ -46,10 +48,8 @@ body{
 
 button{
   font-family: cursive;
-  /* padding: auto; */
-  /* margin-right: 10px; */
   opacity: 0.8;
-  /* margin-top: 10px; */
+  margin-bottom: 5px;
 }
 
 button:hover{
@@ -66,7 +66,7 @@ button:hover{
   background-color: transparent;
   border:none;
   color:oldlace;
-  display: inline-block;
+  display: block;
 }
 
 #shown{
@@ -77,9 +77,9 @@ button:hover{
 #flaged{
   background-color: red;
 }
-h1{
+/* h1{
   margin-bottom: 5px;
-}
+} */
 h2{
   display: none;
   font-size: xx-large;
@@ -95,6 +95,7 @@ h3{
   opacity: 0.8;
   margin: auto;
   margin-bottom: 10px;
+  margin-top: 10px;
   padding: 10px;
   border-radius: 50%;
 }
@@ -102,4 +103,26 @@ h3{
 .smily:hover{
   cursor: pointer;
   background-color: black;
+}
+.bestScore{
+  height:fit-content;
+  width:fit-content;
+  margin: auto;
+  margin-top: 5px;
+  background-color: black;
+  color: lightcyan;
+  opacity: 0.8;
+  padding-left: 3px;
+  padding-right: 3px;
+  margin-bottom: 5px;
+}
+
+.safe{
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: transparent;
+  border:none;
+  color:oldlace;
+  display:block;
 }

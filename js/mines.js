@@ -20,3 +20,17 @@ function placeMines(count) {
         }
     }
 }
+
+function addMinesManualy(location,elManualBtn) {
+    gBoard[location.i][location.j]= {
+        minesAroundCount: MINE,
+        isShown: true,
+        isMine: true,
+        isMarked: false
+    }
+    gLevel.minesAdded--
+    elManualBtn.innerText = (gLevel.minesAdded === 0) ? `let's go!` : gLevel.minesAdded
+    gMinesLocations.push(location)
+    renderCell(location, MINE);
+    return;
+}

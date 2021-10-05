@@ -24,7 +24,7 @@ function renderBoard(mat, selector) {
         for (var j = 0; j < mat[0].length; j++) {
             var cell = (mat[i][j].isShown) ? mat[i][j].minesAroundCount : ' ';
             var className = `cell cell${i}-${j}`;
-            strHTML += `<td class="${className}" onclick="cellClickedLeft({i:${i}, j:${j}}, this)" onmousedown="cellClickedRight(event,{i:${i}, j:${j}}, this)">${cell}</td>`
+            strHTML += `<td class="${className}" onclick="cellClicked({i:${i}, j:${j}}, this)" onmousedown="cellMarked(event,{i:${i}, j:${j}}, this)">${cell}</td>`
         }
         strHTML += '</tr>'
     }
