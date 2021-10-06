@@ -38,7 +38,7 @@ function addMinesManualy(location, elManualBtn) {
 }
 
 function addBoomMines() {
-    var idx = 1;
+    var idx = 0;
     for (var i = 0; i < gBoard.length; i++) {
         for (var j = 0; j < gBoard[0].length; j++) {
             if (idx === 7 || idx % 7 === 0 || idx % 10 === 7 || (idx - (idx % 10)) / 10 === 7 || idx / 10 === 7) {
@@ -53,4 +53,11 @@ function addBoomMines() {
             idx++
         }
     }
+    gBoard[0][0] = {
+        minesAroundCount: 0,
+        isShown: false,
+        isMine: false,
+        isMarked: false
+    }
+    gMinesLocations.shift()
 }
