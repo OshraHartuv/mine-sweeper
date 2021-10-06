@@ -55,7 +55,7 @@ function cellClicked(location, elCell) {
     if (!gGame.isOn) return;
     if (gBoard[location.i][location.j].isMarked) return;
     // manual mode:
-    if (gGame.isManual) {
+    else if (gGame.isManual) {
         gGame.isFirstClick = false;
         var elManualBtn = document.querySelector('.manual')
         // starting game:
@@ -78,7 +78,7 @@ function cellClicked(location, elCell) {
     }
     if (gBoard[location.i][location.j].isShown) return
     // boom mode:
-    if (gGame.isBoom) {
+    else if (gGame.isBoom) {
         gGame.isFirstClick = false;
         addBoomMines()
         gGame.isBoom = false;
