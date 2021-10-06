@@ -163,8 +163,7 @@ function cellMarked(event, location, elcell) {
 }
 
 function manual(elManualBtn) {
-    var elTimer = document.querySelector('.timer');
-    if (elTimer.style.display === 'block') return
+    if (gGame.secsPassed) return;
     if (gGame.isManual) return
     if (gGame.isBoom) return
     var elBoom = document.querySelector('.sevenBoom');
@@ -283,7 +282,7 @@ function showNegs(location) {
         for (var i = 0; i < hintCells.length; i++) {
             var currCellLocation = hintCells[i]
             gBoard[currCellLocation.i][currCellLocation.j].isShown = false
-            renderCell({ i: currCellLocation.i, j: currCellLocation.j }, '')
+            renderCell({ i: currCellLocation.i, j: currCellLocation.j },(gBoard[currCellLocation.i][currCellLocation.j].isMarked) ? FLAG : '')
         }
     }, 1000)
 }
@@ -416,8 +415,7 @@ function undo() {
 }
 
 function sevenBoom(elBoomBtn) {
-    var elTimer = document.querySelector('.timer');
-    if (elTimer.style.display === 'block') return;
+    if (gGame.secsPassed) return;
     if (gGame.isManual) return;
     if (gGame.isBoom) return;
     var elManualBtn = document.querySelector('.manual');
