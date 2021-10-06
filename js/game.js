@@ -253,7 +253,8 @@ function runTimer() {
 function hint() {
     if (!gGame.isOn) return;
     if (!gGame.hints) return;
-    if (gGame.hintIsOn) return
+    if (gGame.hintIsOn) return;
+    if(gGame.secsPassed === 0) return;
     gGame.hints--
     gGame.hintIsOn = true;
     var elHintBtnTextStr = ''
@@ -359,6 +360,7 @@ function checkBestScore() {
 function safeClick() {
     if (!gGame.isOn) return;
     if (!gGame.safeClicks) return
+    if(gGame.secsPassed === 0) return;
     gGame.safeClicks--
     var emptyCell = returnEmptyCell()
     gBoard[emptyCell.i][emptyCell.j].isShown = true;
